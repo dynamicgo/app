@@ -119,6 +119,8 @@ func Run(tag string) {
 		wg.Add(1)
 		go runService(&wg, config, name, f)
 	}
+
+	wg.Wait()
 }
 
 func runService(wg *sync.WaitGroup, config config.Config, name string, f ServiceMain) {
