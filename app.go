@@ -129,7 +129,7 @@ func runService(wg *sync.WaitGroup, config config.Config, name string, f Service
 	logger.Info(fmt.Sprintf("service %s running...", name))
 
 	if err := f(config); err != nil {
-		logger.Info(fmt.Sprintf("service %s stop with err: %s", name, err))
+		logger.ErrorF(fmt.Sprintf("service %s stop with err: %s", name, err))
 	}
 
 	logger.InfoF("service %s stopped", name)
