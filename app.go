@@ -9,6 +9,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/dynamicgo/injector"
+
 	extend "github.com/dynamicgo/go-config-extend"
 	"github.com/dynamicgo/go-config/source/envvar"
 	"github.com/dynamicgo/go-config/source/file"
@@ -106,12 +108,24 @@ func Run(tag string) {
 		return
 	}
 
+	if err := injector.BindServices(config); err != nil {
+		println(fmt.Sprintf("injector bind services error: %s", err))
+		return
+	}
+
 	services := getImportServices()
 
 	if len(services) == 0 {
 		logger.Info(fmt.Sprintf("[%s] run nothing, exit", tag))
 		return
 	}
+
+	go func() {
+		if err := injector.RunServices(); err != nil {
+			println(fmt.Sprintf("injector run services error: %s", err))
+			return
+		}
+	}()
 
 	var wg sync.WaitGroup
 
