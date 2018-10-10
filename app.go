@@ -120,14 +120,18 @@ func Run(tag string) {
 		return
 	}
 
+	var wg sync.WaitGroup
+
+	wg.Add(1)
+
 	go func() {
+		defer wg.Done()
+
 		if err := injector.RunServices(); err != nil {
 			println(fmt.Sprintf("injector run services error: %s", err))
 			return
 		}
 	}()
-
-	var wg sync.WaitGroup
 
 	for name, f := range getImportServices() {
 		wg.Add(1)
