@@ -135,6 +135,8 @@ func Run(tag string) {
 	}
 
 	wg.Wait()
+
+	injector.ServicesJoin()
 }
 
 func runService(wg *sync.WaitGroup, config config.Config, name string, f ServiceMain) {
