@@ -113,13 +113,6 @@ func Run(tag string) {
 		return
 	}
 
-	services := getImportServices()
-
-	if len(services) == 0 {
-		logger.Info(fmt.Sprintf("[%s] run nothing, exit", tag))
-		return
-	}
-
 	if err := injector.StartServices(); err != nil {
 		println(fmt.Sprintf("injector run services error: %s", err))
 		return
@@ -135,6 +128,8 @@ func Run(tag string) {
 	}
 
 	wg.Wait()
+
+	println("injector service join")
 
 	injector.ServicesJoin()
 }
