@@ -92,7 +92,7 @@ func Run(tag string) {
 	config, err := createConfig(*configpath)
 
 	if err != nil {
-		logger.ErrorF("create config error %s", err)
+		logger.ErrorF("create config from %s error %s", *configpath, err)
 		return
 	}
 
