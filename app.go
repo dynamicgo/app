@@ -120,8 +120,6 @@ func Run(tag string) {
 
 	var wg sync.WaitGroup
 
-	wg.Add(1)
-
 	for name, f := range getImportServices() {
 		wg.Add(1)
 		go runService(&wg, config, name, f)
